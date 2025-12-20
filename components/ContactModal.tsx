@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -9,6 +9,15 @@ interface ContactModalProps {
 
 const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, isDarkMode }) => {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [syncing, setSyncing] = useState(true);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSyncing(true);
+      const timer = setTimeout(() => setSyncing(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -19,20 +28,36 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, isDarkMode
   };
 
   return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
-      <div className="w-full max-w-2xl bg-white/70 dark:bg-midnight/80 backdrop-blur-2xl rounded-sm border border-black/10 dark:border-white/10 p-12 relative overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300 transition-colors duration-500">
-        {/* Cinematic Brand Accent */}
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm transition-all duration-500">
+      <div className="w-full max-w-2xl bg-white/70 dark:bg-midnight/80 backdrop-blur-2xl rounded-sm border border-black/10 dark:border-white/10 p-12 relative overflow-hidden shadow-2xl min-h-[600px]">
         <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#FF3DF2] via-[#7B2CFF] to-[#18E6FF]"></div>
         
         <button 
           onClick={onClose}
-          className="absolute top-6 right-8 mono text-black dark:text-white hover:text-cyan transition-colors focus:outline-none click-feedback text-3xl"
+          className="absolute top-6 right-8 mono text-black dark:text-white hover:text-cyan transition-colors focus:outline-none click-feedback text-3xl z-20"
         >
           ×
         </button>
 
-        {status === 'success' ? (
-          <div className="text-center py-16">
+        {syncing ? (
+          <div className="space-y-12 py-10 animate-in fade-in duration-700">
+            <div className="space-y-4">
+              <div className="h-4 w-32 skeleton-shimmer rounded-sm"></div>
+              <div className="h-12 w-2/3 skeleton-shimmer rounded-sm"></div>
+              <div className="h-4 w-full skeleton-shimmer rounded-sm"></div>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+               <div className="h-16 w-full skeleton-shimmer rounded-sm"></div>
+               <div className="h-16 w-full skeleton-shimmer rounded-sm"></div>
+            </div>
+            <div className="h-32 w-full skeleton-shimmer rounded-sm"></div>
+            <div className="h-14 w-full skeleton-shimmer rounded-sm"></div>
+            <div className="text-center">
+               <span className="mono text-[8px] text-black/20 dark:text-white/20 tracking-[0.5em] uppercase">NEURAL_ROUTING_INITIALIZED</span>
+            </div>
+          </div>
+        ) : status === 'success' ? (
+          <div className="text-center py-16 animate-in zoom-in duration-500">
             <h2 className="mono text-2xl font-black text-black dark:text-white mb-6 tracking-tighter uppercase">TRANSMISSION_LOCKED</h2>
             <p className="mono text-[10px] text-black dark:text-white uppercase tracking-[0.4em] leading-relaxed max-w-xs mx-auto">
               Sovereignty handshake protocol initiated. Our architects will evaluate your vision.
@@ -45,7 +70,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, isDarkMode
             </button>
           </div>
         ) : (
-          <>
+          <div className="animate-in fade-in slide-in-from-bottom-3 duration-500">
             <div className="mb-12">
               <span className="mono text-[10px] font-black tracking-[0.6em] text-[#7B2CFF] uppercase block mb-4">INITIATE_HANDSHAKE</span>
               <h2 className="text-5xl font-black text-black dark:text-white mb-4 tracking-tighter transition-colors duration-500">Contact & Access</h2>
@@ -102,7 +127,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, isDarkMode
                 INITIALIZE_HANDSHAKE
               </button>
             </form>
-          </>
+          </div>
         )}
       </div>
     </div>

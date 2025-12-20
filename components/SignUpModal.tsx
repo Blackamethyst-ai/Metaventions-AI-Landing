@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -8,6 +8,15 @@ interface SignUpModalProps {
 
 const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [syncing, setSyncing] = useState(true);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSyncing(true);
+      const timer = setTimeout(() => setSyncing(false), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -24,19 +33,30 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
       aria-modal="true"
       aria-labelledby="signup-title"
     >
-      <div className="glass-noir-bright w-full max-w-md rounded-sm border border-white/20 p-10 relative overflow-hidden shadow-[0_0_120px_rgba(123,44,255,0.25)] animate-in fade-in zoom-in duration-300">
+      <div className="glass-noir-bright w-full max-w-md rounded-sm border border-white/20 p-10 relative overflow-hidden shadow-[0_0_120px_rgba(123,44,255,0.25)] min-h-[500px]">
         <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-[#FF3DF2] via-[#7B2CFF] to-[#18E6FF]"></div>
         
         <button 
           onClick={onClose}
-          className="absolute top-4 right-6 mono text-white/60 hover:text-white text-2xl transition-colors focus:outline-none click-feedback"
+          className="absolute top-4 right-6 mono text-white/60 hover:text-white text-2xl transition-colors focus:outline-none click-feedback z-20"
           aria-label="Close modal"
         >
           ×
         </button>
 
-        {status === 'success' ? (
-          <div className="text-center py-10">
+        {syncing ? (
+          <div className="flex flex-col h-full items-center justify-center space-y-10 animate-in fade-in duration-500 py-10">
+             <div className="h-6 w-3/4 skeleton-shimmer rounded-sm"></div>
+             <div className="space-y-6 w-full">
+                <div className="h-12 w-full skeleton-shimmer rounded-sm"></div>
+                <div className="h-12 w-full skeleton-shimmer rounded-sm"></div>
+                <div className="h-12 w-full skeleton-shimmer rounded-sm"></div>
+             </div>
+             <div className="h-14 w-full skeleton-shimmer rounded-sm mt-4"></div>
+             <span className="mono text-[8px] text-white/40 tracking-[0.5em] uppercase">VERIFYING_HANDSHAKE_NODE...</span>
+          </div>
+        ) : status === 'success' ? (
+          <div className="text-center py-10 animate-in zoom-in duration-500">
             <div className="w-20 h-20 bg-gradient-to-br from-[#18E6FF] via-[#7B2CFF] to-[#FF3DF2] rounded-full mx-auto flex items-center justify-center mb-8 shadow-lg animate-bounce">
                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -54,7 +74,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             </button>
           </div>
         ) : (
-          <>
+          <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
             <div className="mb-10">
               <h2 id="signup-title" className="mono text-sm font-black tracking-[0.5em] text-white uppercase mb-2">Initialize_Handshake</h2>
               <p className="mono text-[10px] text-[#18E6FF] tracking-widest uppercase font-bold">Protocol: Sovereign_Partnership_Beta</p>
@@ -113,7 +133,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             <div className="mt-8 pt-6 border-t border-white/10 text-center">
                <span className="mono text-[8px] text-white/40 tracking-[0.4em] uppercase font-black">Sovereign_Protocol_01 // (C) 2025 Metaventions</span>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
