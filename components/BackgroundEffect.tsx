@@ -15,6 +15,7 @@ const BackgroundEffect: React.FC<BackgroundEffectProps> = ({
   const parallaxRef = useRef<HTMLDivElement>(null);
   const glowRef1 = useRef<HTMLDivElement>(null);
   const glowRef2 = useRef<HTMLDivElement>(null);
+  const glossRef = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: 0, y: 0 });
   const currentMousePos = useRef({ x: 0, y: 0 });
 
@@ -22,7 +23,6 @@ const BackgroundEffect: React.FC<BackgroundEffectProps> = ({
     let ticking = false;
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Normalize mouse position from -1 to 1
       mousePos.current = {
         x: (e.clientX / window.innerWidth) * 2 - 1,
         y: (e.clientY / window.innerHeight) * 2 - 1
@@ -32,34 +32,32 @@ const BackgroundEffect: React.FC<BackgroundEffectProps> = ({
     const updateEffects = () => {
       const scrollY = window.scrollY;
       
-      // Smoothly interpolate current mouse position for fluid movement
-      currentMousePos.current.x += (mousePos.current.x - currentMousePos.current.x) * 0.05;
-      currentMousePos.current.y += (mousePos.current.y - currentMousePos.current.y) * 0.05;
+      currentMousePos.current.x += (mousePos.current.x - currentMousePos.current.x) * 0.04;
+      currentMousePos.current.y += (mousePos.current.y - currentMousePos.current.y) * 0.04;
 
       const mx = currentMousePos.current.x;
       const my = currentMousePos.current.y;
 
-      // Update custom background parallax (scroll only)
       if (parallaxRef.current) {
-        const translateValue = scrollY * 0.15;
-        parallaxRef.current.style.transform = `translate3d(0, ${translateValue}px, 0) scale(1.15)`;
+        const translateValue = scrollY * 0.12;
+        parallaxRef.current.style.transform = `translate3d(0, ${translateValue}px, 0) scale(1.1)`;
       }
 
-      // Update ethereal glows with combined scroll and mouse interactivity
-      // Glow 1 follows mouse slightly
       if (glowRef1.current) {
-        const scrollOffset = scrollY * 0.1;
-        const mouseOffsetX = mx * 30; // 30px max horizontal sway
-        const mouseOffsetY = my * 30; // 30px max vertical sway
-        glowRef1.current.style.transform = `translate3d(${mouseOffsetX}px, ${scrollOffset + mouseOffsetY}px, 0)`;
+        const scrollOffset = scrollY * 0.08;
+        glowRef1.current.style.transform = `translate3d(${mx * 40}px, ${scrollOffset + my * 40}px, 0)`;
       }
 
-      // Glow 2 moves opposite to mouse for parallax depth
       if (glowRef2.current) {
-        const scrollOffset = -scrollY * 0.05;
-        const mouseOffsetX = mx * -50; // Moves further in opposite direction
-        const mouseOffsetY = my * -50;
-        glowRef2.current.style.transform = `translate3d(${mouseOffsetX}px, ${scrollOffset + mouseOffsetY}px, 0)`;
+        const scrollOffset = -scrollY * 0.04;
+        glowRef2.current.style.transform = `translate3d(${mx * -60}px, ${scrollOffset + my * -60}px, 0)`;
+      }
+
+      // Specular Gloss Layer - follows mouse to simulate light reflecting off liquid glass
+      if (glossRef.current) {
+        const posX = (mx + 1) * 50; // 0 to 100%
+        const posY = (my + 1) * 50; // 0 to 100%
+        glossRef.current.style.background = `radial-gradient(circle at ${posX}% ${posY}%, rgba(255,255,255,0.08) 0%, transparent 60%)`;
       }
 
       ticking = false;
@@ -75,7 +73,6 @@ const BackgroundEffect: React.FC<BackgroundEffectProps> = ({
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', onScroll, { passive: true });
     
-    // Start animation loop
     const animationId = window.requestAnimationFrame(updateEffects);
 
     return () => {
@@ -87,67 +84,82 @@ const BackgroundEffect: React.FC<BackgroundEffectProps> = ({
 
   return (
     <div className={`fixed inset-0 -z-10 pointer-events-none overflow-hidden transition-colors duration-700 ${isDarkMode ? 'bg-obsidian' : 'bg-[#F8FAFC]'}`}>
-      {/* Subtle Light Grid Layer */}
-      <div className="absolute inset-0 grid-bg-light opacity-30 transition-opacity"></div>
+      
+      {/* 1. Base Grid Layer */}
+      <div className="absolute inset-0 grid-bg-light opacity-20"></div>
 
-      {/* Default Cinematic Background Elements (Active when no custom image is set) */}
+      {/* 2. Deep Atmospheric Glows */}
       {!customBg ? (
         <>
           <div 
             ref={glowRef1}
-            className={`absolute top-[-20%] left-[-10%] w-[80%] h-[80%] blur-[120px] rounded-full animate-pulse transition-colors duration-700 will-change-transform ${isDarkMode ? 'bg-amethyst/15' : 'bg-[#7B2CFF]/10'}`} 
-            style={{ animationDuration: '8s' }}
+            className={`absolute top-[-20%] left-[-10%] w-[90%] h-[90%] blur-[150px] rounded-full animate-pulse transition-colors duration-700 will-change-transform ${isDarkMode ? 'bg-amethyst/10' : 'bg-[#7B2CFF]/5'}`} 
+            style={{ animationDuration: '10s' }}
           ></div>
           <div 
             ref={glowRef2}
-            className={`absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] blur-[100px] rounded-full animate-pulse transition-colors duration-700 will-change-transform ${isDarkMode ? 'bg-cyan/15' : 'bg-[#18E6FF]/10'}`} 
-            style={{ animationDuration: '12s' }}
+            className={`absolute bottom-[-20%] right-[-10%] w-[80%] h-[80%] blur-[130px] rounded-full animate-pulse transition-colors duration-700 will-change-transform ${isDarkMode ? 'bg-cyan/10' : 'bg-[#18E6FF]/5'}`} 
+            style={{ animationDuration: '15s' }}
           ></div>
         </>
       ) : (
-        /* High-Performance High-Quality Custom Background Layer */
         <div 
           ref={parallaxRef}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700 will-change-transform"
           style={{ 
             backgroundImage: `url(${customBg})`,
             opacity: bgOpacity,
-            height: '130vh',
+            height: '135vh',
             width: '100%',
             imageRendering: 'auto',
-            WebkitBackfaceVisibility: 'hidden',
-            backfaceVisibility: 'hidden',
-            perspective: '1000px'
           }}
         ></div>
       )}
 
-      {/* High-Fidelity Atmospheric Noise/Particles */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 brightness-100"></div>
-        {[...Array(30)].map((_, i) => (
+      {/* 3. Liquid Glass Overlay - The "Pop" Secret */}
+      <div className="absolute inset-0 overflow-hidden backdrop-blur-[6px] saturate-[140%]">
+        {/* Subtle specularity (Gloss) */}
+        <div 
+          ref={glossRef}
+          className="absolute inset-0 transition-opacity duration-500 opacity-60 mix-blend-overlay"
+        ></div>
+        
+        {/* Crystallized texture grain */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] contrast-200 pointer-events-none"></div>
+      </div>
+
+      {/* 4. Atmospheric Particles */}
+      <div className="absolute inset-0 opacity-20">
+        {[...Array(25)].map((_, i) => (
           <div 
             key={i}
-            className={`absolute rounded-full opacity-20 transition-colors duration-700 ${isDarkMode ? 'bg-white' : 'bg-black'}`}
+            className={`absolute rounded-full opacity-40 transition-colors duration-700 ${isDarkMode ? 'bg-white' : 'bg-black'}`}
             style={{
-              width: (Math.random() * 2 + 0.5) + 'px',
-              height: (Math.random() * 2 + 0.5) + 'px',
+              width: (Math.random() * 1.5 + 0.5) + 'px',
+              height: (Math.random() * 1.5 + 0.5) + 'px',
               top: (Math.random() * 100) + '%',
               left: (Math.random() * 100) + '%',
-              // Add a slight shimmer animation to particles
-              animation: `pulse ${Math.random() * 3 + 2}s infinite ease-in-out`,
+              animation: `pulse ${Math.random() * 4 + 3}s infinite ease-in-out`,
               animationDelay: `${Math.random() * 5}s`
             }}
           />
         ))}
       </div>
 
-      {/* Adaptive Cinematic Vignette */}
+      {/* 5. Deep Cinematic Vignette - Drives focus to UI */}
       <div className={`absolute inset-0 transition-opacity duration-700 ${
         isDarkMode 
-          ? 'bg-[radial-gradient(circle_at_50%_30%,transparent_0%,rgba(5,7,13,0.7)_100%)]' 
-          : 'bg-[radial-gradient(circle_at_50%_30%,transparent_0%,rgba(248,250,252,0.6)_100%)]'
+          ? 'bg-[radial-gradient(circle_at_50%_40%,transparent_20%,rgba(5,7,13,0.85)_100%)]' 
+          : 'bg-[radial-gradient(circle_at_50%_40%,transparent_20%,rgba(248,250,252,0.7)_100%)]'
       }`}></div>
+
+      {/* SVG Liquid Filter Definition */}
+      <svg className="hidden">
+        <filter id="liquid-filter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
     </div>
   );
 };
