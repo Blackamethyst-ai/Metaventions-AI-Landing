@@ -119,16 +119,17 @@
             box-shadow: 0 30px 120px rgba(0, 0, 0, 0.4);
         }
 
-        /* Gold Glass Morphism */
+        /* SPECIAL: Liquid Gold Glass Morphism */
         .glass-gold {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(215, 178, 109, 0.5);
-            box-shadow: 0 0 40px rgba(215, 178, 109, 0.1);
+            background: linear-gradient(135deg, rgba(215, 178, 109, 0.2), rgba(215, 178, 109, 0.05));
+            backdrop-filter: blur(45px) saturate(180%);
+            border: 1px solid rgba(215, 178, 109, 0.4);
+            box-shadow: 0 0 80px rgba(215, 178, 109, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.1);
         }
         .dark .glass-gold {
-            background: rgba(11, 16, 32, 0.96);
+            background: linear-gradient(135deg, rgba(215, 178, 109, 0.12), rgba(215, 178, 109, 0.02));
             border: 1px solid rgba(215, 178, 109, 0.3);
+            box-shadow: 0 0 100px rgba(215, 178, 109, 0.1);
         }
 
         /* Sovereign Spectrum Gradient - Outline Only */
