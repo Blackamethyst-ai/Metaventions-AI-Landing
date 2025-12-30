@@ -53,12 +53,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm transition-opacity duration-200">
-      <div className="w-full max-w-lg bg-[#0B1020] rounded-sm relative overflow-hidden shadow-2xl border border-white/10 min-h-[480px] animate-in zoom-in-95 fade-in duration-200 ease-out">
+      <div className="w-full max-w-lg glass-modal rounded-sm relative overflow-hidden shadow-2xl min-h-[480px] animate-in zoom-in-95 fade-in duration-200 ease-out">
         <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#FF3DF2] via-[#7B2CFF] to-[#18E6FF] z-30"></div>
         
         <button 
           onClick={onClose}
-          className="absolute top-4 right-5 text-white/30 hover:text-white transition-colors click-feedback z-30 p-2"
+          className="absolute top-4 right-5 text-black dark:text-white/30 hover:text-amethyst transition-colors click-feedback z-30 p-2"
           aria-label="Close"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -79,19 +79,19 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
         {/* Content Layer */}
         <div className={`p-10 pt-12 transition-all duration-300 ${syncing ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-          <h2 className="mono text-sm font-black tracking-[0.6em] text-white text-center uppercase mb-10">
+          <h2 className="mono text-sm font-black tracking-[0.6em] text-black dark:text-white text-center uppercase mb-10">
             SYSTEM_SETTINGS
           </h2>
           
           <div className="space-y-10">
             <div>
-              <label className="block mono text-[8px] uppercase font-black text-white/30 mb-4 tracking-[0.4em]">
+              <label className="block mono text-[8px] uppercase font-black text-black/40 dark:text-white/30 mb-4 tracking-[0.4em]">
                 BG_ARCHITECTURE
               </label>
               
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full aspect-[2/1] bg-black/40 border border-dashed border-white/10 rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-[#18E6FF]/40 transition-all group relative overflow-hidden click-feedback"
+                className="w-full aspect-[2/1] bg-black/10 dark:bg-black/40 border border-dashed border-black/20 dark:border-white/10 rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-[#18E6FF]/40 transition-all group relative overflow-hidden click-feedback"
               >
                 {currentBg ? (
                   <div className="absolute inset-0">
@@ -102,7 +102,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   </div>
                 ) : (
                   <div className="flex flex-col items-center opacity-40">
-                    <span className="mono text-[8px] text-white uppercase tracking-[0.3em] font-black">SELECT_ASSET</span>
+                    <span className="mono text-[8px] text-black dark:text-white uppercase tracking-[0.3em] font-black">SELECT_ASSET</span>
                   </div>
                 )}
               </div>
@@ -112,7 +112,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <label className="mono text-[8px] uppercase font-black text-white/30 tracking-[0.4em]">OPACITY</label>
+                <label className="mono text-[8px] uppercase font-black text-black/40 dark:text-white/30 tracking-[0.4em]">OPACITY</label>
                 <span className="mono text-[8px] text-[#18E6FF] font-black">{Math.round(bgOpacity * 100)}%</span>
               </div>
               <input 
@@ -122,20 +122,20 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 step="0.01"
                 value={bgOpacity}
                 onChange={(e) => onUpdateOpacity(parseFloat(e.target.value))}
-                className="w-full h-[1px] bg-white/10 appearance-none cursor-pointer"
+                className="w-full h-[1px] bg-black/10 dark:bg-white/10 appearance-none cursor-pointer"
               />
             </div>
 
             <div className="flex gap-4 pt-4">
               <button 
                 onClick={() => { onUpdateBg(null); onUpdateOpacity(0.4); }}
-                className="flex-grow py-3 border border-white/5 rounded-sm mono text-[8px] font-black text-white/40 tracking-[0.3em] uppercase hover:bg-white/5 transition-colors click-feedback"
+                className="flex-grow py-3 border border-black/10 dark:border-white/5 rounded-sm mono text-[8px] font-black text-black/40 dark:text-white/40 tracking-[0.3em] uppercase hover:bg-black/5 dark:hover:bg-white/5 transition-colors click-feedback"
               >
                 RESET
               </button>
               <button 
                 onClick={onClose}
-                className="flex-grow py-3 bg-white text-black rounded-sm mono text-[8px] font-black tracking-[0.3em] uppercase hover:bg-[#18E6FF] transition-colors click-feedback"
+                className="flex-grow py-3 bg-black dark:bg-white text-white dark:text-black rounded-sm mono text-[8px] font-black tracking-[0.3em] uppercase hover:bg-amethyst hover:text-white transition-colors click-feedback"
               >
                 TERMINATE
               </button>

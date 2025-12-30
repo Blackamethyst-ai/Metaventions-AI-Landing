@@ -22,7 +22,7 @@ const VisionModal: React.FC<VisionModalProps> = ({ isOpen, onClose, isDarkMode }
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm transition-opacity duration-200">
-      <div className="w-full max-w-4xl bg-white dark:bg-midnight rounded-sm border border-black/10 dark:border-white/10 p-16 relative overflow-y-auto max-h-[90vh] shadow-2xl min-h-[500px] animate-in fade-in zoom-in-95 duration-200 ease-out">
+      <div className="w-full max-w-4xl glass-modal rounded-sm p-16 relative overflow-y-auto max-h-[90vh] shadow-2xl min-h-[500px] animate-in fade-in zoom-in-95 duration-200 ease-out">
         <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#FF3DF2] via-[#7B2CFF] to-[#18E6FF] z-30"></div>
         
         <button 
@@ -59,13 +59,13 @@ const VisionModal: React.FC<VisionModalProps> = ({ isOpen, onClose, isDarkMode }
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-black/5 dark:bg-white/5 rounded-sm border border-black/5 dark:border-white/5">
+              <div className="p-6 bg-black/10 dark:bg-white/5 rounded-sm border border-black/5 dark:border-white/5">
                 <h3 className="mono text-[9px] font-black tracking-widest text-[#7B2CFF] uppercase mb-2">Agency</h3>
                 <p className="text-black/70 dark:text-white/50 text-xs leading-relaxed">
                   Systems empower, not replace. Every workflow is transparent and modular.
                 </p>
               </div>
-              <div className="p-6 bg-black/5 dark:bg-white/5 rounded-sm border border-black/5 dark:border-white/5">
+              <div className="p-6 bg-black/10 dark:bg-white/5 rounded-sm border border-black/5 dark:border-white/5">
                 <h3 className="mono text-[9px] font-black tracking-widest text-[#18E6FF] uppercase mb-2">Sovereignty</h3>
                 <p className="text-black/70 dark:text-white/50 text-xs leading-relaxed">
                   Your data, your logic. We utilize sovereign stacks to protect your intelligence.

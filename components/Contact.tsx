@@ -39,28 +39,27 @@ const Contact: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
-                <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">OPERATOR_IDENT</label>
+                <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">IDENTITY</label>
                 <input 
                   required
                   type="text" 
-                  placeholder="FULL_NAME"
+                  placeholder="YOUR FULL NAME"
                   className="w-full bg-[#E6EDF5]/50 border border-[#0B1020]/10 rounded-sm px-8 py-5 focus:outline-none focus:border-[#18E6FF] transition-all text-[#0B1020] mono text-xs uppercase placeholder:text-[#0B1020]/20"
                 />
               </div>
               <div>
-                <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">NEURAL_ROUTE</label>
+                <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">CONTACT_CHANNEL</label>
                 <input 
                   required
                   type="email" 
-                  defaultValue="Dicoangelo@Metaventions.com"
-                  placeholder="EMAIL@CORE.COM"
+                  placeholder="EMAIL_ADDRESS"
                   className="w-full bg-[#E6EDF5]/50 border border-[#0B1020]/10 rounded-sm px-8 py-5 focus:outline-none focus:border-[#7B2CFF] transition-all text-[#0B1020] mono text-xs uppercase placeholder:text-[#0B1020]/20"
                 />
               </div>
             </div>
             
             <div>
-              <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">INTENT_VECTOR</label>
+              <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">INQUIRY_PURPOSE</label>
               <select className="w-full bg-[#E6EDF5]/50 border border-[#0B1020]/10 rounded-sm px-8 py-5 focus:outline-none focus:border-[#FF3DF2] transition-all text-[#0B1020] mono text-xs uppercase appearance-none cursor-pointer">
                 <option>STRUCTURA_BETA_ACCESS</option>
                 <option>R&D_COLLABORATION</option>
@@ -69,10 +68,10 @@ const Contact: React.FC = () => {
             </div>
             
             <div>
-              <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">ARCHITECTURAL_BRIEF</label>
+              <label className="block mono text-[9px] uppercase font-black text-[#0B1020]/40 mb-4 tracking-[0.4em]">DETAILED_INQUIRY</label>
               <textarea 
                 rows={5}
-                placeholder="DEFINE YOUR TARGET STATE..."
+                placeholder="DESCRIBE YOUR INTEREST OR TARGET STATE..."
                 className="w-full bg-[#E6EDF5]/50 border border-[#0B1020]/10 rounded-sm px-8 py-5 focus:outline-none focus:border-[#18E6FF] transition-all text-[#0B1020] mono text-xs uppercase resize-none placeholder:text-[#0B1020]/20"
               ></textarea>
             </div>

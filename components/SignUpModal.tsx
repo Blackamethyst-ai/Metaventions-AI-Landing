@@ -32,12 +32,12 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="w-full max-w-md bg-obsidian rounded-sm border border-white/10 p-10 relative overflow-hidden shadow-2xl min-h-[480px] animate-in zoom-in-95 duration-200 ease-out">
+      <div className="w-full max-w-md glass-modal rounded-sm p-10 relative overflow-hidden shadow-2xl min-h-[480px] animate-in zoom-in-95 duration-200 ease-out">
         <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-[#FF3DF2] via-[#7B2CFF] to-[#18E6FF] z-30"></div>
         
         <button 
           onClick={onClose}
-          className="absolute top-4 right-6 mono text-white/40 hover:text-white text-xl transition-colors click-feedback z-30"
+          className="absolute top-4 right-6 mono text-black/40 dark:text-white/40 hover:text-amethyst text-xl transition-colors click-feedback z-30"
         >
           ×
         </button>
@@ -61,10 +61,10 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" />
                  </svg>
               </div>
-              <h2 className="mono text-lg font-black text-white mb-4 tracking-tighter uppercase">Success</h2>
+              <h2 className="mono text-lg font-black text-black dark:text-white mb-4 tracking-tighter uppercase">Success</h2>
               <button 
                 onClick={onClose}
-                className="mt-12 px-10 py-3 bg-white text-black mono text-[9px] font-black tracking-widest uppercase hover:bg-[#18E6FF] transition-colors rounded-sm click-feedback"
+                className="mt-12 px-10 py-3 bg-black dark:bg-white text-white dark:text-black mono text-[9px] font-black tracking-widest uppercase hover:bg-[#18E6FF] transition-colors rounded-sm click-feedback"
               >
                 TERMINATE
               </button>
@@ -72,33 +72,42 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
           ) : (
             <div>
               <div className="mb-10">
-                <h2 className="mono text-xs font-black tracking-[0.5em] text-white uppercase mb-2">Initialize_Sync</h2>
-                <p className="mono text-[8px] text-[#18E6FF] tracking-widest uppercase font-bold opacity-60">Handshake Required</p>
+                <h2 className="mono text-xs font-black tracking-[0.5em] text-black dark:text-white uppercase mb-2">Initialize_Sync</h2>
+                <p className="mono text-[8px] text-[#18E6FF] tracking-widest uppercase font-bold opacity-60">Authentication Required</p>
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-5">
-                <input 
-                  required
-                  type="text" 
-                  placeholder="IDENTIFIER"
-                  className="w-full bg-white/5 border border-white/10 rounded-sm px-5 py-3.5 focus:outline-none focus:border-[#18E6FF] transition-all text-white mono text-[9px] uppercase placeholder:text-white/20"
-                />
-                <input 
-                  required
-                  type="email" 
-                  placeholder="NEURAL_ROUTE"
-                  className="w-full bg-white/5 border border-white/10 rounded-sm px-5 py-3.5 focus:outline-none focus:border-[#7B2CFF] transition-all text-white mono text-[9px] uppercase placeholder:text-white/20"
-                />
-                <input 
-                  required
-                  type="text" 
-                  placeholder="ENTITY"
-                  className="w-full bg-white/5 border border-white/10 rounded-sm px-5 py-3.5 focus:outline-none focus:border-[#FF3DF2] transition-all text-white mono text-[9px] uppercase placeholder:text-white/20"
-                />
+                <div className="space-y-1">
+                  <label className="mono text-[8px] uppercase opacity-40 font-black tracking-[0.2em] ml-1">IDENTITY</label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="FULL NAME"
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-5 py-3.5 focus:outline-none focus:border-[#18E6FF] transition-all text-black dark:text-white mono text-[9px] uppercase placeholder:text-black/40 dark:placeholder:text-white/20"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="mono text-[8px] uppercase opacity-40 font-black tracking-[0.2em] ml-1">CONTACT_CHANNEL</label>
+                  <input 
+                    required
+                    type="email" 
+                    placeholder="EMAIL ADDRESS"
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-5 py-3.5 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase placeholder:text-black/40 dark:placeholder:text-white/20"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="mono text-[8px] uppercase opacity-40 font-black tracking-[0.2em] ml-1">ORGANIZATION</label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="ENTITY / COMPANY"
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-5 py-3.5 focus:outline-none focus:border-[#FF3DF2] transition-all text-black dark:text-white mono text-[9px] uppercase placeholder:text-black/40 dark:placeholder:text-white/20"
+                  />
+                </div>
                 <button 
                   type="submit" 
                   disabled={status === 'sending'}
-                  className="w-full py-4 bg-white text-black rounded-sm mono text-[9px] font-black tracking-[0.6em] uppercase hover:bg-[#18E6FF] transition-all flex items-center justify-center shadow-2xl click-feedback mt-4"
+                  className="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-sm mono text-[9px] font-black tracking-[0.6em] uppercase hover:bg-amethyst hover:text-white transition-all flex items-center justify-center shadow-2xl click-feedback mt-4"
                 >
                   {status === 'sending' ? 'TRANSMITTING...' : 'INITIALIZE'}
                 </button>

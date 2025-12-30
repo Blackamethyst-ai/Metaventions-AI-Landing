@@ -28,7 +28,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, isDarkMode
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm transition-opacity duration-200">
-      <div className="w-full max-w-6xl bg-white dark:bg-midnight rounded-sm border border-black/10 dark:border-white/10 p-12 relative overflow-y-auto max-h-[90vh] shadow-2xl min-h-[580px] animate-in zoom-in-95 duration-200 ease-out">
+      <div className="w-full max-w-6xl glass-modal rounded-sm p-12 relative overflow-y-auto max-h-[90vh] shadow-2xl min-h-[580px] animate-in zoom-in-95 duration-200 ease-out">
         <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#FF3DF2] via-[#7B2CFF] to-[#18E6FF] z-30"></div>
         
         <button 
@@ -58,7 +58,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, isDarkMode
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-14">
             {ecosystem.map(item => (
-              <div key={item.id} className="p-8 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-sm transition-all hover:bg-black/10 dark:hover:bg-white/10">
+              <div key={item.id} className="p-8 bg-black/10 dark:bg-white/10 border border-black/5 dark:border-white/5 rounded-sm transition-all hover:bg-black/20 dark:hover:bg-white/20">
                 <span className="mono text-[8px] font-black text-black/40 dark:text-white/40 block mb-4">{item.id}</span>
                 <h3 className="text-lg font-black text-black dark:text-white mb-2 tracking-tight">{item.title}</h3>
                 <p className="text-xs text-black/60 dark:text-white/50 leading-relaxed">{item.text}</p>
@@ -67,7 +67,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, isDarkMode
           </div>
 
           <div className="text-center">
-            <button className="px-12 py-4 bg-black dark:bg-white text-white dark:text-black mono text-[9px] font-black tracking-[0.5em] uppercase hover:bg-black/90 dark:hover:bg-white/90 transition-all click-feedback">
+            <button className="px-12 py-4 bg-black dark:bg-white text-white dark:text-black mono text-[9px] font-black tracking-[0.5em] uppercase hover:bg-amethyst hover:text-white transition-all click-feedback">
               ACCESS_PROTOCOL
             </button>
           </div>

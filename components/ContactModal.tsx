@@ -29,7 +29,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, isDarkMode
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm transition-opacity duration-200">
-      <div className="w-full max-w-2xl bg-white dark:bg-midnight rounded-sm border border-black/10 dark:border-white/10 p-12 relative overflow-hidden shadow-2xl min-h-[580px] animate-in slide-in-from-bottom-2 fade-in duration-200 ease-out">
+      <div className="w-full max-w-2xl glass-modal rounded-sm p-12 relative overflow-hidden shadow-2xl min-h-[580px] animate-in slide-in-from-bottom-2 fade-in duration-200 ease-out">
         <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#FF3DF2] via-[#7B2CFF] to-[#18E6FF] z-30"></div>
         
         <button 
@@ -70,35 +70,47 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, isDarkMode
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input 
-                    required
-                    type="text" 
-                    placeholder="IDENTIFIER"
-                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase placeholder:text-black/30 dark:placeholder:text-white/30"
-                  />
-                  <input 
-                    required
-                    type="email" 
-                    placeholder="NEURAL_ROUTE"
-                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase placeholder:text-black/30 dark:placeholder:text-white/30"
-                  />
+                  <div className="space-y-2">
+                    <label className="mono text-[8px] uppercase opacity-40 font-black tracking-[0.2em] ml-1">IDENTITY</label>
+                    <input 
+                      required
+                      type="text" 
+                      placeholder="YOUR FULL NAME"
+                      className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase placeholder:text-black/30 dark:placeholder:text-white/30"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="mono text-[8px] uppercase opacity-40 font-black tracking-[0.2em] ml-1">CONTACT_CHANNEL</label>
+                    <input 
+                      required
+                      type="email" 
+                      placeholder="EMAIL_ADDRESS"
+                      className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase placeholder:text-black/30 dark:placeholder:text-white/30"
+                    />
+                  </div>
                 </div>
 
-                <select className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase appearance-none cursor-pointer">
-                  <option>STRUCTURA_BETA</option>
-                  <option>COLLABORATION</option>
-                  <option>INQUIRY</option>
-                </select>
+                <div className="space-y-2">
+                  <label className="mono text-[8px] uppercase opacity-40 font-black tracking-[0.2em] ml-1">OBJECTIVE</label>
+                  <select className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase appearance-none cursor-pointer">
+                    <option className="bg-white dark:bg-obsidian">STRUCTURA_BETA_ACCESS</option>
+                    <option className="bg-white dark:bg-obsidian">COLLABORATION_INQUIRY</option>
+                    <option className="bg-white dark:bg-obsidian">INVESTOR_RELATIONS</option>
+                  </select>
+                </div>
 
-                <textarea 
-                  rows={4}
-                  placeholder="BRIEF"
-                  className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase resize-none placeholder:text-black/30 dark:placeholder:text-white/30"
-                ></textarea>
+                <div className="space-y-2">
+                  <label className="mono text-[8px] uppercase opacity-40 font-black tracking-[0.2em] ml-1">INQUIRY_BRIEF</label>
+                  <textarea 
+                    rows={4}
+                    placeholder="DESCRIBE YOUR INTEREST..."
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-sm px-6 py-4 focus:outline-none focus:border-[#7B2CFF] transition-all text-black dark:text-white mono text-[9px] uppercase resize-none placeholder:text-black/30 dark:placeholder:text-white/30"
+                  ></textarea>
+                </div>
 
                 <button 
                   type="submit" 
-                  className="w-full py-5 bg-black dark:bg-white text-white dark:text-black rounded-sm mono text-[9px] font-black tracking-[0.6em] uppercase hover:bg-black/90 dark:hover:bg-white/90 transition-all shadow-xl click-feedback"
+                  className="w-full py-5 bg-black dark:bg-white text-white dark:text-black rounded-sm mono text-[9px] font-black tracking-[0.6em] uppercase hover:bg-amethyst hover:text-white transition-all shadow-xl click-feedback"
                 >
                   TRANSMIT
                 </button>

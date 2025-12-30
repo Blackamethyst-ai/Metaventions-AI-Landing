@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      <div className="absolute inset-0 bg-white/70 dark:bg-obsidian/70 backdrop-blur-md border-b border-black/10 dark:border-white/10 pointer-events-none transition-colors duration-500"></div>
+      <div className="absolute inset-0 bg-white/90 dark:bg-obsidian/90 backdrop-blur-xl border-b border-black/5 dark:border-white/5 pointer-events-none transition-colors duration-500"></div>
       
       <div className="w-[98%] mx-auto flex items-center justify-between px-2 py-5 relative z-10">
         <div className="flex items-center gap-12 overflow-hidden">
@@ -51,7 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   </defs>
                </svg>
             </div>
-            <span className="mono font-black text-xl tracking-widest text-black dark:text-white transition-colors duration-500 holo-text-pulse">
+            <span className="mono font-black text-xl tracking-widest text-[#0B1020] dark:text-white transition-colors duration-500 holo-text-pulse">
               METAVENTIONS <span className="text-[#18E6FF]">AI</span>
             </span>
           </button>
@@ -61,7 +61,11 @@ const Navbar: React.FC<NavbarProps> = ({
               <button 
                 key={link.label}
                 onClick={link.action}
-                className={`nav-link ${link.isGold ? 'nav-link-gold text-gold font-bold' : 'text-black dark:text-white/70 hover:text-black dark:hover:text-white'} mono text-[10px] uppercase tracking-[0.3em] transition-colors duration-500 click-feedback`}
+                className={`nav-link ${
+                  link.isGold 
+                    ? 'nav-link-gold text-gold font-bold' 
+                    : 'text-[#0B1020] font-bold'
+                } mono text-[10px] uppercase tracking-[0.3em] transition-colors duration-500 click-feedback`}
               >
                 {link.label}
               </button>
