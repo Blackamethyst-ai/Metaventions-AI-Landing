@@ -48,9 +48,9 @@ const Ecosystem: React.FC = () => {
     <section 
       id="ecosystem"
       ref={sectionRef}
-      className={`py-40 reveal-hidden ${isVisible ? 'reveal-visible' : ''}`}
+      className="py-40"
     >
-      <div className="flex flex-col md:flex-row justify-between items-end mb-28 border-b border-black/10 dark:border-white/10 pb-12 transition-colors duration-500">
+      <div className={`flex flex-col md:flex-row justify-between items-end mb-28 border-b border-black/10 dark:border-white/10 pb-12 transition-colors duration-500 reveal-hidden ${isVisible ? 'reveal-visible' : ''}`}>
         <div className="max-w-2xl">
           <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-black dark:text-white mb-6">The Ecosystem</h2>
           <p className="text-black/60 dark:text-white/60 mono text-[10px] tracking-[0.5em] uppercase font-bold">Disciplined Futurism // Multi-Layer Protocols</p>
@@ -65,7 +65,11 @@ const Ecosystem: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
         {cards.map((card, idx) => (
-          <div key={idx} className="group relative">
+          <div 
+            key={idx} 
+            className={`group relative reveal-hidden ${isVisible ? 'reveal-visible' : ''}`}
+            style={{ transitionDelay: `${(idx + 1) * 150}ms` }}
+          >
             <div className="relative glass-slab h-full p-12 rounded-sm flex flex-col border-black/10 dark:border-white/10 transition-all duration-700 group-hover:-translate-y-4 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.1)] dark:group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.5)] group-hover:border-[#18E6FF]/40 click-feedback">
               <div className="flex justify-between items-start mb-12">
                 <span className="mono text-[11px] font-black text-black/40 dark:text-white/40 tracking-[0.4em] transition-colors duration-500">{card.id}</span>

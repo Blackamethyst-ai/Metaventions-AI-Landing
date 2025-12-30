@@ -13,7 +13,7 @@ const Mission: React.FC = () => {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
 
     if (sectionRef.current) {
@@ -26,12 +26,12 @@ const Mission: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className={`py-40 relative overflow-hidden reveal-hidden ${isVisible ? 'reveal-visible' : ''}`}
+      className="py-40 relative overflow-hidden"
     >
       <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-black/10 dark:via-white/10 to-transparent"></div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center relative z-10">
-        <div className="space-y-8">
+        <div className={`space-y-8 reveal-hidden ${isVisible ? 'reveal-visible' : ''}`} style={{ transitionDelay: '100ms' }}>
           <div className="flex items-center gap-4">
              <div className="w-8 h-[1px] bg-[#7B2CFF]"></div>
              <span className="mono text-[#7B2CFF] font-black tracking-[0.4em] text-[10px] uppercase">OPERATOR_BRIEF</span>
@@ -44,7 +44,7 @@ const Mission: React.FC = () => {
           </p>
         </div>
         
-        <div className="space-y-12">
+        <div className={`space-y-12 reveal-hidden ${isVisible ? 'reveal-visible' : ''}`} style={{ transitionDelay: '300ms' }}>
           <div className="glass-slab-floating p-12 rounded-sm border-white/20 dark:border-white/10 relative overflow-hidden shadow-sm">
             <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#18E6FF] to-[#7B2CFF]"></div>
             <p className="text-2xl text-black dark:text-white leading-relaxed font-light mb-8 tracking-tight transition-colors duration-500">
