@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Mission from './components/Mission';
@@ -13,6 +13,9 @@ import VisionModal from './components/VisionModal';
 import ProductModal from './components/ProductModal';
 import InvestorsModal from './components/InvestorsModal';
 
+// Lazy load the Genesis Sequence for better performance
+const GenesisSequence = lazy(() => import('./components/GenesisSequence'));
+
 const App: React.FC = () => {
   const [customBg, setCustomBg] = useState<string | null>(null);
   const [bgOpacity, setBgOpacity] = useState<number>(0.4);
@@ -23,6 +26,21 @@ const App: React.FC = () => {
   const [isVisionOpen, setIsVisionOpen] = useState(false);
   const [isProductOpen, setIsProductOpen] = useState(false);
   const [isInvestorsOpen, setIsInvestorsOpen] = useState(false);
+
+  // Genesis Sequence state - show on first visit
+  const [showGenesis, setShowGenesis] = useState(() => {
+    // Check if user has seen the intro before
+    const hasSeenIntro = localStorage.getItem('metaventions_seen_genesis');
+    // Also check URL param to force show: ?genesis=true
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceShow = urlParams.get('genesis') === 'true';
+    return forceShow || !hasSeenIntro;
+  });
+
+  const handleGenesisComplete = () => {
+    setShowGenesis(false);
+    localStorage.setItem('metaventions_seen_genesis', 'true');
+  };
 
   useEffect(() => {
     const storedBg = localStorage.getItem('metaventions_custom_bg');
@@ -78,6 +96,13 @@ const App: React.FC = () => {
 
   return (
     <div className={`relative min-h-screen selection:bg-[#7B2CFF]/30 overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
+      {/* Genesis Sequence - The D-Ecosystem Origin Story */}
+      {showGenesis && (
+        <Suspense fallback={<div className="fixed inset-0 bg-black z-[9999]" />}>
+          <GenesisSequence onComplete={handleGenesisComplete} autoPlay={true} />
+        </Suspense>
+      )}
+
       <BackgroundEffect customBg={customBg} bgOpacity={bgOpacity} isDarkMode={isDarkMode} />
       <Navbar 
         onOpenSettings={() => setIsSettingsOpen(true)} 
