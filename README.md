@@ -35,11 +35,43 @@ A futuristic, responsive landing page showcasing Metaventions AI — a research 
 
 | Technology | Purpose |
 |:-----------|:--------|
-| **React 18** | UI framework |
+| **React 19** | UI framework |
 | **TypeScript** | Type safety |
 | **Vite** | Build tooling |
 | **Tailwind CSS** | Styling |
-| **Gemini API** | AI integration (optional) |
+| **Supabase** | Database + Edge Functions |
+| **Resend** | Email notifications |
+| **Vercel** | Hosting + CI/CD |
+
+---
+
+## Backend Architecture
+
+```
+┌─────────────────┐      ┌──────────────────────┐      ┌─────────────┐
+│  Landing Page   │ ───▶ │  Supabase Edge Fn    │ ───▶ │  Database   │
+│  (Vercel)       │      │  form-submit         │      │  PostgreSQL │
+└─────────────────┘      └──────────────────────┘      └─────────────┘
+                                   │
+                                   ▼
+                         ┌─────────────────┐
+                         │  Resend Email   │
+                         │  Notification   │
+                         └─────────────────┘
+```
+
+### Database Tables
+
+| Table | Purpose |
+|:------|:--------|
+| `signups` | Early access / waitlist signups (name, email, organization) |
+| `contact_submissions` | Contact form inquiries (name, email, objective, message) |
+
+### Edge Function
+
+- **Endpoint:** `https://rqidgeittsjkpkykmdrz.supabase.co/functions/v1/form-submit`
+- Handles both signup and contact form submissions
+- Validates input, stores to database, sends email notification
 
 ---
 
@@ -80,12 +112,16 @@ Metaventions-AI-Landing/
 │   ├── Footer.tsx       # Footer with links
 │   ├── BackgroundEffect.tsx  # Dynamic background
 │   ├── SettingsModal.tsx     # User preferences
-│   ├── SignUpModal.tsx       # Newsletter signup
-│   ├── ContactModal.tsx      # Contact form
+│   ├── SignUpModal.tsx       # Early access signup → Supabase
+│   ├── ContactModal.tsx      # Contact form → Supabase
 │   ├── VisionModal.tsx       # Vision details
 │   ├── ProductModal.tsx      # Product information
 │   └── InvestorsModal.tsx    # Investor relations
+├── lib/
+│   └── supabase.ts      # Supabase API client for form submissions
 ├── types.ts             # TypeScript definitions
+├── Dockerfile           # Cloud Run deployment
+├── nginx.conf           # Nginx configuration
 ├── vite.config.ts       # Vite configuration
 └── package.json         # Dependencies
 ```
